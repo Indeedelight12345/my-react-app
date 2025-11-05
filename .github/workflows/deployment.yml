@@ -43,6 +43,11 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
 
+
+      - name: Add server to known_hosts
+        run: |
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
       - name: Copy build folder to server
         run: |
           scp -r ./build/* ubuntu@${{ secrets.SERVER_HOST }}:/var/www/html/
